@@ -20,5 +20,6 @@
             $response['status'] = 'error';
             $response['message'] = 'Error: ' . $sql . '<br>' . $conn->error;
         }
+        return $response;
     }
-// ?>
+?>
