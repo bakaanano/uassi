@@ -54,7 +54,7 @@ INSERT INTO `pegawai` (`id_pegawai`, `nama`, `jabatan`, `status_kepegawaian`, `g
 CREATE TABLE `detail_gaji` (
   `id` int(11) DEFAULT NULL,
   `id_pegawai` varchar(20) NOT NULL,
-  'gaji_pokok' decimal(12,2) DEFAULT NULL,
+  `gaji_pokok` decimal(12,2) DEFAULT NULL,
   `id_tunjangan` int(11) DEFAULT NULL,
   `jumlah_diterima` decimal(10,2) DEFAULT NULL,
   `tanggal` date DEFAULT NULL
@@ -64,7 +64,7 @@ CREATE TABLE `detail_gaji` (
 -- Dumping data for table `pegawai_tunjangan`
 --
 
-INSERT INTO `pegawai_tunjangan` (`id`, `id_pegawai`,`gaji_pokok` , `id_tunjangan`, `jumlah_diterima`, `tanggal`) VALUES
+INSERT INTO `detail_gaji` (`id`, `id_pegawai`, `gaji_pokok` , `id_tunjangan`, `jumlah_diterima`, `tanggal`) VALUES
 (1, 'EMP001', 9000000.00 , 1 ,  500000.00 ,'2025-04-01'),
 (2, 'EMP001', 9000000.00 , 2 ,  220000.00 ,'2025-04-01'),
 (3, 'EMP001', 9000000.00 , 3 , 1000000.00 ,'2025-04-01'),
@@ -133,7 +133,7 @@ ALTER TABLE `pegawai`
 --
 -- Indexes for table `pegawai_tunjangan`
 --
-ALTER TABLE `pegawai_tunjangan`
+ALTER TABLE `detail_gaji`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_pegawai` (`id_pegawai`),
   ADD KEY `id_tunjangan` (`id_tunjangan`);
@@ -158,7 +158,7 @@ ALTER TABLE `tunjangan`
 --
 -- AUTO_INCREMENT for table `pegawai_tunjangan`
 --
-ALTER TABLE `pegawai_tunjangan`
+ALTER TABLE `detail_gaji`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
@@ -180,9 +180,9 @@ ALTER TABLE `tunjangan`
 --
 -- Constraints for table `pegawai_tunjangan`
 --
-ALTER TABLE `pegawai_tunjangan`
-  ADD CONSTRAINT `pegawai_tunjangan_ibfk_1` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id_pegawai`),
-  ADD CONSTRAINT `pegawai_tunjangan_ibfk_2` FOREIGN KEY (`id_tunjangan`) REFERENCES `tunjangan` (`id_tunjangan`);
+ALTER TABLE `detail_gaji`
+  ADD CONSTRAINT `detail_gaji_ibfk_1` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id_pegawai`),
+  ADD CONSTRAINT `detail_gaji_ibfk_2` FOREIGN KEY (`id_tunjangan`) REFERENCES `tunjangan` (`id_tunjangan`);
 
 --
 -- Constraints for table `presensi`
