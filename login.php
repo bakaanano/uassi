@@ -1,54 +1,41 @@
 <?php
 require_once 'connection.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    $employee_id = trim($_POST['id_pegawai']);
-    $password = trim($_POST['password']);
+$response = ['status' => 'error', 'message' => 'Terjadi kesalahan.'];
 
-    if (empty($employee_id) || empty($password)) {
-        die(json_encode(['status' => 'error', 'message' => 'Employee ID and Password cannot be empty!']));
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $data = json_decode(file_get_contents("php://input"), true);
 
-    $sql = "SELECT id_pegawai, nama, password FROM pegawai WHERE id_pegawai = ?";
+        if (isset($data['id_pegawai']) && isset($data['password'])) {
+        $id_pegawai = $data['id_pegawai'];
+        $password = $data['password'];
 
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("s", $employee_id);
-
+        $stmt = $conn->prepare("SELECT id_pegawai, nama, jabatan, status_kepegawaian FROM pegawai WHERE id_pegawai = ? AND password = ?");
+        $stmt->bind_param("ss", $id_pegawai, $password);
         $stmt->execute();
-
         $result = $stmt->get_result();
 
-        if ($result->num_rows == 1) {
-            $employee = $result->fetch_assoc();
-
-            if ($password == $employee['password']) {
-                
-                $_SESSION['loggedin'] = true;
-                $_SESSION['employee_id'] = $employee['id_pegawai'];
-                $_SESSION['name'] = $employee['nama'];
-
-                echo json_encode(['status' => 'success', 'message' => 'Login successful!']);
-
-            } else {
-                // Incorrect Password
-                echo json_encode(['status' => 'error', 'message' => 'The password you entered is incorrect.']);
-            }
+        if ($result->num_rows > 0) {
+            $pegawai = $result->fetch_assoc();
+            $response = [
+                'status' => 'success',
+                'message' => 'Login berhasil!',
+                'data' => $pegawai
+            ];
         } else {
-            // Employee ID not found
-            echo json_encode(['status' => 'error', 'message' => 'Employee ID not found.']);
+            http_response_code(401); 
+            $response = ['status' => 'error', 'message' => 'ID Pegawai atau password salah.'];
         }
-
-        // Close the statement
         $stmt->close();
+    } else {
+        http_response_code(400); 
+        $response = ['status' => 'error', 'message' => 'Data tidak lengkap. Harap kirim id_pegawai dan password.'];
     }
-
-    // Close the connection
-    $conn->close();
-
 } else {
-    // If the file is accessed directly, deny access
-    http_response_code(403);
-    echo json_encode(['status' => 'error', 'message' => 'Access Denied.']);
+    http_response_code(405);
+    $response = ['status' => 'error', 'message' => 'Metode request tidak diizinkan. Gunakan POST.'];
 }
+
+$conn->close();
+echo json_encode($response);
 ?>
