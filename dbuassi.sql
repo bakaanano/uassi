@@ -51,25 +51,26 @@ INSERT INTO `pegawai` (`id_pegawai`, `nama`, `jabatan`, `status_kepegawaian`, `g
 -- Table structure for table `pegawai_tunjangan`
 --
 
-CREATE TABLE `pegawai_tunjangan` (
-  `id` int(11) NOT NULL,
-  `id_pegawai` varchar(20) DEFAULT NULL,
+CREATE TABLE `detail_gaji` (
+  `id` int(11) DEFAULT NULL,
+  `id_pegawai` varchar(20) NOT NULL,
+  'gaji_pokok' decimal(12,2) DEFAULT NULL,
   `id_tunjangan` int(11) DEFAULT NULL,
-  `tanggal` date DEFAULT NULL,
-  `jumlah_diterima` decimal(10,2) DEFAULT NULL
+  `jumlah_diterima` decimal(10,2) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pegawai_tunjangan`
 --
 
-INSERT INTO `pegawai_tunjangan` (`id`, `id_pegawai`, `id_tunjangan`, `tanggal`, `jumlah_diterima`) VALUES
-(1, 'EMP001', 1, '2025-04-01', 500000.00),
-(2, 'EMP001', 2, '2025-04-01', 220000.00),
-(3, 'EMP001', 3, '2025-04-01', 1000000.00),
-(4, 'EMP002', 1, '2025-04-01', 500000.00),
-(5, 'EMP002', 2, '2025-04-01', 230000.00),
-(6, 'EMP002', 3, '2025-04-01', 1200000.00);
+INSERT INTO `pegawai_tunjangan` (`id`, `id_pegawai`,`gaji_pokok` , `id_tunjangan`, `jumlah_diterima`, `tanggal`) VALUES
+(1, 'EMP001', 9000000.00 , 1 ,  500000.00 ,'2025-04-01'),
+(2, 'EMP001', 9000000.00 , 2 ,  220000.00 ,'2025-04-01'),
+(3, 'EMP001', 9000000.00 , 3 , 1000000.00 ,'2025-04-01'),
+(4, 'EMP002', 9000000.00 , 1 ,  500000.00 ,'2025-04-01'),
+(5, 'EMP002', 9000000.00 , 2 ,  230000.00 ,'2025-04-01'),
+(6, 'EMP002', 9000000.00 , 3 , 1200000.00 ,'2025-04-01');
 
 -- --------------------------------------------------------
 
