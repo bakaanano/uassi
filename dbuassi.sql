@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pegawai`
+-- membuat tabel `pegawai`
 --
 
 CREATE TABLE `pegawai` (
@@ -37,7 +37,7 @@ CREATE TABLE `pegawai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `pegawai`
+-- mengisi data dummy untuk tabel `pegawai`
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `nama`, `jabatan`, `status_kepegawaian`, `gaji_pokok`, `password`) VALUES
@@ -48,23 +48,23 @@ INSERT INTO `pegawai` (`id_pegawai`, `nama`, `jabatan`, `status_kepegawaian`, `g
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pegawai_tunjangan`
+-- membuat tabel `detail_gaji`
 --
 
 CREATE TABLE `detail_gaji` (
   `id` int(11) DEFAULT NULL,
   `id_pegawai` varchar(20) NOT NULL,
-  'gaji_pokok' decimal(12,2) DEFAULT NULL,
+  `gaji_pokok` decimal(12,2) DEFAULT NULL,
   `id_tunjangan` int(11) DEFAULT NULL,
   `jumlah_diterima` decimal(10,2) DEFAULT NULL,
   `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `pegawai_tunjangan`
+-- mengisi data dummy untuk tabel `detail_gaji`
 --
 
-INSERT INTO `pegawai_tunjangan` (`id`, `id_pegawai`,`gaji_pokok` , `id_tunjangan`, `jumlah_diterima`, `tanggal`) VALUES
+INSERT INTO `detail_gaji` (`id`, `id_pegawai`, `gaji_pokok` , `id_tunjangan`, `jumlah_diterima`, `tanggal`) VALUES
 (1, 'EMP001', 9000000.00 , 1 ,  500000.00 ,'2025-04-01'),
 (2, 'EMP001', 9000000.00 , 2 ,  220000.00 ,'2025-04-01'),
 (3, 'EMP001', 9000000.00 , 3 , 1000000.00 ,'2025-04-01'),
@@ -75,7 +75,7 @@ INSERT INTO `pegawai_tunjangan` (`id`, `id_pegawai`,`gaji_pokok` , `id_tunjangan
 -- --------------------------------------------------------
 
 --
--- Table structure for table `presensi`
+-- membuat tabel `presensi`
 --
 
 CREATE TABLE `presensi` (
@@ -88,7 +88,7 @@ CREATE TABLE `presensi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `presensi`
+-- mengisi data dummy untuk tabel `presensi`
 --
 
 INSERT INTO `presensi` (`id_presensi`, `id_pegawai`, `waktu_masuk`, `waktu_keluar`, `lokasi`, `status_kehadiran`) VALUES
@@ -101,7 +101,7 @@ INSERT INTO `presensi` (`id_presensi`, `id_pegawai`, `waktu_masuk`, `waktu_kelua
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tunjangan`
+-- membuat tabel `tunjangan`
 --
 
 CREATE TABLE `tunjangan` (
@@ -112,7 +112,7 @@ CREATE TABLE `tunjangan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tunjangan`
+-- mengisi data dummy untuk tabel `tunjangan`
 --
 
 INSERT INTO `tunjangan` (`id_tunjangan`, `jenis`, `jumlah`, `ketentuan`) VALUES
@@ -121,71 +121,71 @@ INSERT INTO `tunjangan` (`id_tunjangan`, `jenis`, `jumlah`, `ketentuan`) VALUES
 (3, 'Kinerja', 1000000.00, 'Berdasarkan evaluasi kinerja bulanan');
 
 --
--- Indexes for dumped tables
+-- Keterangan tabel
 --
 
 --
--- Indexes for table `pegawai`
+-- keterangan untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id_pegawai`);
 
 --
--- Indexes for table `pegawai_tunjangan`
+-- keterangan untuk tabel `detail_gaji`
 --
-ALTER TABLE `pegawai_tunjangan`
+ALTER TABLE `detail_gaji`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_pegawai` (`id_pegawai`),
   ADD KEY `id_tunjangan` (`id_tunjangan`);
 
 --
--- Indexes for table `presensi`
+-- keterangan untuk tabel `presensi`
 --
 ALTER TABLE `presensi`
   ADD PRIMARY KEY (`id_presensi`),
   ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
--- Indexes for table `tunjangan`
+-- keterangan untuk tabel `tunjangan`
 --
 ALTER TABLE `tunjangan`
   ADD PRIMARY KEY (`id_tunjangan`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel
 --
 
 --
--- AUTO_INCREMENT for table `pegawai_tunjangan`
+-- AUTO_INCREMENT untuk tabel `detail_gaji`
 --
-ALTER TABLE `pegawai_tunjangan`
+ALTER TABLE `detail_gaji`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `presensi`
+-- AUTO_INCREMENT untuk tabel `presensi`
 --
 ALTER TABLE `presensi`
   MODIFY `id_presensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `tunjangan`
+-- AUTO_INCREMENT untuk tabel `tunjangan`
 --
 ALTER TABLE `tunjangan`
   MODIFY `id_tunjangan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Constraints for dumped tables
+-- Constraints untuk tabel
 --
 
 --
--- Constraints for table `pegawai_tunjangan`
+-- Constraints untuk tabel `detail_gaji`
 --
-ALTER TABLE `pegawai_tunjangan`
-  ADD CONSTRAINT `pegawai_tunjangan_ibfk_1` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id_pegawai`),
-  ADD CONSTRAINT `pegawai_tunjangan_ibfk_2` FOREIGN KEY (`id_tunjangan`) REFERENCES `tunjangan` (`id_tunjangan`);
+ALTER TABLE `detail_gaji`
+  ADD CONSTRAINT `detail_gaji_ibfk_1` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id_pegawai`),
+  ADD CONSTRAINT `detail_gaji_ibfk_2` FOREIGN KEY (`id_tunjangan`) REFERENCES `tunjangan` (`id_tunjangan`);
 
 --
--- Constraints for table `presensi`
+-- Constraints untuk tabel `presensi`
 --
 ALTER TABLE `presensi`
   ADD CONSTRAINT `presensi_ibfk_1` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id_pegawai`);
